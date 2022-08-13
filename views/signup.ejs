@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/tailwind.css">
+    <script src="https://kit.fontawesome.com/2723f43300.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon"   href="/man.png" type="image/png" sizes="50x50">
+    <title>signup</title>
+</head>
+<style>
+    #navbar-section {
+   z-index: 2;
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   padding: 16px 5%;
+   background-color: #14110d;
+   color: #fafdf3;
+ }
+ 
+ #page-title {
+   margin: 0;
+   text-align: left;
+   font-weight: 700;
+   font-size: x-large;
+ }
+ @media screen and (max-width:480px) {
+    #page-title {
+    text-align: center;
+    }
+    
+  }
+</style>
+<body class="h-100v bg-fb-back flex items-center justify-center">
+    <nav id="navbar-section">
+        <h1 id="page-title">Welcome to Face Gram</h1>
+    </nav>
+    <div class="bg-white px-5 py-10  rounded-lg flex flex-col  justify-center align-center sm:px-10 sm:py-16">
+        <h1 class="text-3xl m-auto mb-3 font-bold"> <i  class="fa-solid fa-user"></i> Signup</h1>
+        <h1 class="text-red-600 text-md m-auto" > <%=error %> </h1>
+        <form action="/signup" class="flex flex-col justify-center"  method="POST">
+            <input type="text"     required class="bg-transparent border border-1 rounded outline-none my-2 py-2 px-2 text-black" placeholder="username" name="name">
+            <input type="email"    required class="bg-transparent border border-1 rounded outline-none my-2 py-2 px-2 text-black" placeholder="email" name="email">
+            <input type="password" required class="bg-transparent border border-1 rounded outline-none my-2 py-2 px-2 text-black" placeholder="password" name="password">
+            <input type="submit" value="Signup" class=" text-white bg-black px-2 py-2 w-1/3  m-auto mt-2 rounded hover:bg-slate-900 cursor-pointer"  name="signup">
+        </form>
+</div>
+</body>
+</html>

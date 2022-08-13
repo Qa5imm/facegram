@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/chat.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    <script src="https://kit.fontawesome.com/8e0785f7b4.js" crossorigin="anonymous"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src = "/socket.io/socket.io.js"></script>
+    <link rel="shortcut icon"   href="/man.png" type="image/png" sizes="50x50">
+    <title>Messenger</title>
+</head>
+      <body style="background-color: #E4E6EB;">
+        <div class="wrapper" id="wrapper">
+
+          <section class="chat-area">
+            <header>
+              <img src= '../profile_img/<%= profile %>' id="img_src"  alt="">
+              <div class="details"><%= name_chater %> </div>
+            </header>
+
+              <div  class="chat-box" id="message-container">
+
+                    <% let msg_data = JSON.stringify(rows) %>
+                    <% console.log(msg_data) %> 
+
+                    <% let msg_data_final= JSON.parse(msg_data)%> 
+
+                    <% for(let i=0; i< msg_data_final.length; i++){ %>
+
+                      <% if(msg_data_final[i]["sender_id"] ==  my_id) { %>
+                        
+                        <div  id="chat_outgoing"  class="chat outgoing">
+                          <div class="details" id="details-outgoing">
+                            <p> <%= msg_data_final[i]["message"]%> </p>
+                          </div>
+                        </div>  
+                      <% } else{ %>
+                        <div id="chat_incoming" class="chat incoming">
+                          <img src='../profile_img/<%= profile %>' alt="">
+                          <div class="details" id="details-incoming">
+                          <p> <%=msg_data_final[i]["message"]%> </p>
+                          </div>
+                        </div>
+                      <% }}%>
+
+              </div>
+
+            <form action="#" class="typing-area" id="send-container">
+              <input type="text" name="message" class="input-field" placeholder="Type a message here..."  id="message-input" autocomplete="off">
+              <button type="submit" class="button"  ><i class="fab fa-telegram-plane"></i></button>
+            </form>
+          </section>
+        
+        </div>
+
+      <p style="display:none;" id="msg_data"> <% rows %> </p>
+      <p style="display:none;" id="recipient_id"> <%= recipient_id %> </p>
+      <p style="display:none;" id="my_id"> <%= my_id %> </p>
+       
+</body>
+<script src="/precompiledjs/chat.js"></script>
+<script>
+     
+
+
+
+</script>
+
+     
+</html>
