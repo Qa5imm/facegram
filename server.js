@@ -592,6 +592,6 @@ app.post("/cancel_req", authenticateMiddleware, (req, res) => {
 })
 
 
-http.listen(3000, () => {
+http.listen(process.env.PORT, () => {
     console.log("server lsitening on port 3000")
 })
