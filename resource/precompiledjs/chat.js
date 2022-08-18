@@ -48,7 +48,10 @@ socket.on('recieve-msg', function (msg, id) {
 });
 send_container_el.addEventListener("submit", function (e) {
   e.preventDefault();
-  message_container_el.lastElementChild.scrollIntoView(true);
+  if (message_container_el.lastElementChild){
+      message_container_el.lastElementChild.scrollIntoView(true);
+  }
+  
   var msg = message_input_el.value;
   appendMessage(msg, "outgoing");
   socket.emit('send-chat-message', recipient_id_el.innerText, msg);

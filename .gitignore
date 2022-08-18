@@ -1,4 +1,4 @@
 .env
-node_modules/*
-resource/js
-js/*
+/js
+/node_modules
+my_database.sql
