@@ -9,7 +9,7 @@ const cookieSession = require('cookie-session')
 const { DateTime } = require("luxon")
 const { Socket } = require("socket.io");
 const fileUpload = require("express-fileupload");
-const crypto= require("crypto")
+const crypto = require("crypto")
 require("dotenv").config()
 const fs = require('fs');
 const { profile } = require("console");
@@ -67,29 +67,29 @@ con.connect((err) => {
     }
 })
 
-const io= require("socket.io")(http)
+const io = require("socket.io")(http)
 
-let users={}
+let users = {}
 
-io.on('connection',(socket)=>{
-    socket.on('new-user',(id)=>{
-        users[id]=socket.id
-      
+io.on('connection', (socket) => {
+    socket.on('new-user', (id) => {
+        users[id] = socket.id
+
     })
-    socket.on("send-chat-message",(friend_id,msg)=>{
+    socket.on("send-chat-message", (friend_id, msg) => {
         const key = Object.keys(users).find(key => users[key] === socket.id);
-       
-    
-        con.query('INSERT INTO Messages (sender_id, recipient_id, message) VALUES (?,?,?)', [ key, friend_id, msg], (err,result)=>{
+
+
+        con.query('INSERT INTO Messages (sender_id, recipient_id, message) VALUES (?,?,?)', [key, friend_id, msg], (err, result) => {
             if (err) throw err;
-            else{
-                if(users.hasOwnProperty(friend_id)){
+            else {
+                if (users.hasOwnProperty(friend_id)) {
                     socket.to(users[friend_id]).emit('recieve-msg', msg, key)
                 }
-        
+
             }
         })
-       
+
     })
 
 })
@@ -101,63 +101,62 @@ app.get("/", (req, res) => {
     if (req.session.hasOwnProperty("user_id")) {
         res.redirect("myfeed")
     }
-    else{
-        res.render("login.ejs",{
+    else {
+        res.render("login.ejs", {
             error: ""
         })
     }
-        
+
 })
 
-app.get("/messenger",(req,res)=>{
-    const chater_id= req.query.id
+app.get("/messenger", (req, res) => {
+    const chater_id = req.query.id
     let chater_name;
     let chater_profie;
 
-    con.query(`SELECT Users.name, AboutInfo.profile FROM Users JOIN AboutInfo ON Users.id = AboutInfo.id  WHERE Users.id= ${chater_id}`,(err,result)=>{
+    con.query(`SELECT Users.name, AboutInfo.profile FROM Users JOIN AboutInfo ON Users.id = AboutInfo.id  WHERE Users.id= ${chater_id}`, (err, result) => {
         if (err) throw err
-        else{
-            if(result!='')
-            {
-                chater_name= result[0].name
-                chater_profie= result[0].profile
+        else {
+            if (result != '') {
+                chater_name = result[0].name
+                chater_profie = result[0].profile
             }
-            
+
         }
-    
-    con.query(`SELECT * FROM Messages WHERE (sender_id=${req.session.user_id} AND recipient_id=${chater_id}) OR (sender_id=${chater_id} AND recipient_id=${req.session.user_id})`,(err,result2)=>{
-        if (err) throw err
-        res.render("chat.ejs",
-        {
-            recipient_id: chater_id,
-            name_chater: chater_name,
-            my_id: req.session.user_id,
-            profile:chater_profie,
-            rows: result2
+
+        con.query(`SELECT * FROM Messages WHERE (sender_id=${req.session.user_id} AND recipient_id=${chater_id}) OR (sender_id=${chater_id} AND recipient_id=${req.session.user_id})`, (err, result2) => {
+            if (err) throw err
+            res.render("chat.ejs",
+                {
+                    recipient_id: chater_id,
+                    name_chater: chater_name,
+                    my_id: req.session.user_id,
+                    profile: chater_profie,
+                    rows: result2
+                })
         })
     })
-    })
 
 
 
 
 
 
-  
+
 })
 
 app.get("/login_page", (req, res) => {
     res.render("login.ejs",
-    {
-        error: ""
-    })
+        {
+            error: ""
+        })
 })
 
 app.post("/login", (req, res) => {
     con.query(`SELECT id,name,email,password FROM Users WHERE email= '${req.body.email}'`, (err, result) => {
         if (err) throw err;
         else if (result.length === 0) {
-            res.render("login.ejs",{
+            res.render("login.ejs", {
                 error: "email or password incorrect"
             })
             return
@@ -165,19 +164,18 @@ app.post("/login", (req, res) => {
         else {
             bcrypt.compare(req.body.password, result[0].password, function (err, results) {
                 if (err) throw err;
-                if(!results){
-                    res.render("login.ejs",{
+                if (!results) {
+                    res.render("login.ejs", {
                         error: "email or password incorrect"
                     })
                     return
                 }
                 if (results) {
-                    if(req.session.user_id == false  || !req.session.hasOwnProperty("user_id")){
-                       
-                        con.query(`SELECT * FROM AboutInfo WHERE id=${result[0].id}`,(err,result_2)=>{
-                            if(err) throw err
-                            if (result_2 == '')
-                            {   
+                    if (req.session.user_id == false || !req.session.hasOwnProperty("user_id")) {
+
+                        con.query(`SELECT * FROM AboutInfo WHERE id=${result[0].id}`, (err, result_2) => {
+                            if (err) throw err
+                            if (result_2 == '') {
                                 con.query(`INSERT INTO AboutInfo (id, description,relationship,city,highschool,profile) VALUES (${result[0].id},"","","","",'default.jpg')`, (err, result3) => {
                                     if (err) throw err;
                                 })
@@ -202,26 +200,28 @@ app.get("/signup", (req, res) => {
 
 })
 
-app.get("/info",authenticateMiddleware,(req,res)=>{
-    con.query(`SELECT name,email FROM Users WHERE id=${req.session.user_id}`,(err,result)=>{
-        if(err) throw err 
-        else{
+app.get("/info", authenticateMiddleware, (req, res) => {
+    con.query(`SELECT name,email FROM Users WHERE id=${req.session.user_id}`, (err, result) => {
+        if (err) throw err
+        else {
             res.render("info.ejs", {
                 name: result[0].name,
                 email: result[0].email
-            }) 
+            })
         }
     })
 })
 
 
-app.post("/update_info",authenticateMiddleware,(req,res)=>{
+app.post("/update_info", authenticateMiddleware, (req, res) => {
     bcrypt.hash(`${req.body.password}`, 10, function (err, hash) {
         if (err) throw err;
         else {
             con.query(`SELECT * FROM Users WHERE id = ${req.session.user_id}`, (err, result) => {
                 if (result != "") {
-                    if (req.body.password == ""){
+                    console.log("dudu")
+                    if (req.body.password == "") {
+                        console.log("hete")
                         con.query(`UPDATE Users SET name= ?, email= ? WHERE  id=${req.session.user_id}`, [req.body.name, req.body.email], (error, result) => {
                             if (error) throw error;
                             else {
@@ -229,7 +229,7 @@ app.post("/update_info",authenticateMiddleware,(req,res)=>{
                             }
                         })
                     }
-                    else{
+                    else {
                         con.query(`UPDATE Users SET name= ?, email= ?,password=? WHERE  id=${req.session.user_id}`, [req.body.name, req.body.email, hash], (error, result) => {
                             if (error) throw error;
                             else {
@@ -237,7 +237,7 @@ app.post("/update_info",authenticateMiddleware,(req,res)=>{
                             }
                         })
                     }
-                    
+
                 }
             })
 
@@ -277,40 +277,40 @@ app.post("/about", authenticateMiddleware, (req, res) => {
         })
     }
     else {
-        con.query(`SELECT profile FROM AboutInfo WHERE id=${req.session.user_id}`, (err,resultx)=>{
-            if (err){
+        con.query(`SELECT profile FROM AboutInfo WHERE id=${req.session.user_id}`, (err, resultx) => {
+            if (err) {
                 throw err
             }
-            const filename= resultx[0]['profile']
-            if (filename!='default.jpg'){
+            const filename = resultx[0]['profile']
+            if (filename != 'default.jpg') {
                 const path = `resource/profile_img/${filename}`
                 try {
-                fs.unlinkSync(path)
-                //file removed
-                } catch(err) {
-                console.error(err)
+                    fs.unlinkSync(path)
+                    //file removed
+                } catch (err) {
+                    console.error(err)
                 }
             }
         })
-        
+
         // nam eof the input is sampleFile
         let id = crypto.randomBytes(20).toString('hex');
         sampleFile = req.files.profile
-        filename= sampleFile.name.replace(/\s+/g, '');
+        filename = sampleFile.name.replace(/\s+/g, '');
 
-        uploadPath = __dirname + "/resource/profile_img/" + id +req.session.user_id + filename
-            // use the mv to place the file on the server
-            sampleFile.mv(uploadPath, (err) => {
-                if (err) return res.status(500).send(err)
+        uploadPath = __dirname + "/resource/profile_img/" + id + req.session.user_id + filename
+        // use the mv to place the file on the server
+        sampleFile.mv(uploadPath, (err) => {
+            if (err) return res.status(500).send(err)
 
-                con.query(`UPDATE AboutInfo SET description = ?, relationship=?, city=?, highschool=?, profile=? WHERE id = ${req.session.user_id}`, [req.body.des, req.body.relation, req.body.city, req.body.highschool, id +req.session.user_id + filename], (err, rows) => {
-                    if (!err) {
-                        res.redirect('/profile');
-                    } else {
-                        throw err;
-                    }
-                })
+            con.query(`UPDATE AboutInfo SET description = ?, relationship=?, city=?, highschool=?, profile=? WHERE id = ${req.session.user_id}`, [req.body.des, req.body.relation, req.body.city, req.body.highschool, id + req.session.user_id + filename], (err, rows) => {
+                if (!err) {
+                    res.redirect('/profile');
+                } else {
+                    throw err;
+                }
             })
+        })
 
     }
 
@@ -346,7 +346,7 @@ app.post("/signup", (req, res) => {
 
 app.get("/logout", (req, res) => {
     req.session = null
-    res.render("login.ejs",{
+    res.render("login.ejs", {
         error: ""
     })
 
@@ -384,33 +384,32 @@ app.get("/allpost", authenticateMiddleware, (req, res) => {
 
 })
 
-app.post("/mypost",authenticateMiddleware ,(req,res)=>{
+app.post("/mypost", authenticateMiddleware, (req, res) => {
     con.query(`SELECT Users.name, Posts.user_id, Posts.poster_id, Users.email, Posts.content, Posts.date_posted, AboutInfo.profile FROM Posts JOIN Users ON Posts.user_id=Users.id JOIN AboutInfo ON AboutInfo.id=Posts.user_id WHERE Users.id= ${req.body.input.req_id} ORDER BY Posts.poster_id DESC ;`, (err, result) => {
         if (err) throw err
         else {
             const final_result = result.map((elem) => {
                 elem.date_posted = DateTime.fromJSDate(elem.date_posted).toFormat("dd LLL yyyy")
                 return elem
-        })
+            })
             res.json(final_result)
         }
     })
 
 })
 
-app.post("/update",authenticateMiddleware,(req,res)=>{
-    const post_id=req.body.post_id
-    const post_text=req.body.msg
-    con.query(`UPDATE Posts SET content= '${post_text}' WHERE poster_id=${post_id}`,(err,result)=>{
+app.post("/update", authenticateMiddleware, (req, res) => {
+    const post_id = req.body.post_id
+    const post_text = req.body.msg
+    con.query(`UPDATE Posts SET content= '${post_text}' WHERE poster_id=${post_id}`, (err, result) => {
         if (err) throw err
-    })  
+    })
 
 })
 
-app.post("/delpost",authenticateMiddleware,(req,res)=>
-{
-    const post_id= req.body.post_id
-    con.query(`DELETE FROM Posts WHERE poster_id=${post_id}`,(err,result)=>{
+app.post("/delpost", authenticateMiddleware, (req, res) => {
+    const post_id = req.body.post_id
+    con.query(`DELETE FROM Posts WHERE poster_id=${post_id}`, (err, result) => {
         if (err) throw err
     })
 })
@@ -428,10 +427,10 @@ app.post("/getusers", authenticateMiddleware, (req, res) => {
 
 app.get("/req_info", authenticateMiddleware, (req, res) => {
     let info;
-    con.query(`SELECT * FROM AboutInfo WHERE id= ${req.query.id}`,(err,resultx)=>{
+    con.query(`SELECT * FROM AboutInfo WHERE id= ${req.query.id}`, (err, resultx) => {
         if (err) throw err
-        else{
-            info=resultx
+        else {
+            info = resultx
             con.query(`SELECT * FROM Users  WHERE Users.id= ${req.query.id} `, (err, result) => {
                 if (err) throw err
                 else {
@@ -453,26 +452,27 @@ app.get("/req_info", authenticateMiddleware, (req, res) => {
                                 my_id: req.session.user_id,
                                 friend_status: corn,
                                 req_list: [],
-                                my_info:info
+                                my_info: info
                             })
-        
+
                         }
-                    })        
+                    })
                 }
             })
-        }})
+        }
+    })
 
 
-    
+
 
 })
 app.get("/userinfo", authenticateMiddleware, (req, res) => {
-    
+
     let info;
-    con.query(`SELECT * FROM AboutInfo WHERE id= ${req.query.id}`,(err,resultx)=>{
+    con.query(`SELECT * FROM AboutInfo WHERE id= ${req.query.id}`, (err, resultx) => {
         if (err) throw err
-        else{
-            info=resultx
+        else {
+            info = resultx
             con.query(`SELECT * FROM Users WHERE Users.id= ${req.query.id}`, (err, result) => {
                 if (err) throw err
                 else {
@@ -480,16 +480,16 @@ app.get("/userinfo", authenticateMiddleware, (req, res) => {
                         if (err) throw err
                         else {
                             let corn = "Add Friend"
-                            if (result_2 != "") {  
-                                
-                                if (result_2[0].status2==0 && (req.session.user_id == result_2[0].user2_id)){
+                            if (result_2 != "") {
+
+                                if (result_2[0].status2 == 0 && (req.session.user_id == result_2[0].user2_id)) {
                                     corn = "Accept request"
                                 }
 
                                 else if (result_2[0].status2 == 0) {
                                     corn = "cancel req"
                                 }
-                                
+
                                 else if (result_2[0].status2 == 1) {
                                     corn = "Friend"
                                 }
@@ -500,77 +500,78 @@ app.get("/userinfo", authenticateMiddleware, (req, res) => {
                                 my_id: req.session.user_id,
                                 friend_status: corn,
                                 req_list: [],
-                                my_info:info
+                                my_info: info
                             })
-        
+
                         }
                     })
                 }
             })
-        }})
-    
+        }
+    })
+
 })
 
-app.get("/profile", authenticateMiddleware, (req, res) => {    
-                let info;
-                con.query(`SELECT Users.name, AboutInfo.id, AboutInfo.city,AboutInfo.description,AboutInfo.relationship,AboutInfo.profile,AboutInfo.highschool FROM AboutInfo JOIN Users ON Users.id=AboutInfo.id  WHERE Users.id= ${req.session.user_id}`,(err,result)=>{
+app.get("/profile", authenticateMiddleware, (req, res) => {
+    let info;
+    con.query(`SELECT Users.name, AboutInfo.id, AboutInfo.city,AboutInfo.description,AboutInfo.relationship,AboutInfo.profile,AboutInfo.highschool FROM AboutInfo JOIN Users ON Users.id=AboutInfo.id  WHERE Users.id= ${req.session.user_id}`, (err, result) => {
+        if (err) throw err
+        else {
+            info = result
+            if (req.query.hasOwnProperty("typ")) {
+                res.render("myprofile.ejs", {
+                    u_name: result[0].name,
+                    user_id: result[0].id,
+                    my_id: req.session.user_id,
+                    friend_status: "Accept request",
+                    req_list: [],
+                    my_info: info
+                })
+            }
+            else {
+                con.query(`SELECT  Friends.user1_id, Users.name, AboutInfo.profile FROM Friends JOIN Users ON Users.id=Friends.user1_id JOIN AboutInfo ON AboutInfo.id=Friends.user1_id WHERE Friends.user2_id= ${req.session.user_id} AND Friends.status2= 0;`, (err, result_2) => {
                     if (err) throw err
-                    else{
-                        info=result
-                        if (req.query.hasOwnProperty("typ")) {
-                            res.render("myprofile.ejs", {
-                                u_name: result[0].name,
-                                user_id: result[0].id,
-                                my_id: req.session.user_id,
-                                friend_status: "Accept request",
-                                req_list: [],
-                                my_info:info
-                            })
-                        }
-                        else{
-                            con.query(`SELECT  Friends.user1_id, Users.name, AboutInfo.profile FROM Friends JOIN Users ON Users.id=Friends.user1_id JOIN AboutInfo ON AboutInfo.id=Friends.user1_id WHERE Friends.user2_id= ${req.session.user_id} AND Friends.status2= 0;`,(err,result_2)=>{
-                                if(err) throw err
-                                if(result_2!=''){
-                                    res.render("myprofile.ejs", {
-                                    u_name: result[0].name,
-                                    user_id: req.session.user_id,
-                                    my_id: req.session.user_id,
-                                    friend_status: "notifictaion",
-                                    req_list: result_2,
-                                    my_info:info
-                                })
-                                    
-                                }
-                                else {
-                                    res.render("myprofile.ejs", {
-                                        u_name: req.session.username,
-                                        user_id: req.session.user_id,
-                                        my_id: req.session.user_id,
-                                        friend_status: "none",
-                                        req_list: [],
-                                        my_info:info
-                                    })
-                
-                                }
-                            })
-                            
-                        }
-                        
+                    if (result_2 != '') {
+                        res.render("myprofile.ejs", {
+                            u_name: result[0].name,
+                            user_id: req.session.user_id,
+                            my_id: req.session.user_id,
+                            friend_status: "notifictaion",
+                            req_list: result_2,
+                            my_info: info
+                        })
 
                     }
-                
-                
+                    else {
+                        res.render("myprofile.ejs", {
+                            u_name: result[0].name,
+                            user_id: req.session.user_id,
+                            my_id: req.session.user_id,
+                            friend_status: "none",
+                            req_list: [],
+                            my_info: info
+                        })
 
-            })
-                
+                    }
+                })
+
+            }
+
+
+        }
+
+
+
+    })
 
 
 
 
-            
-        
 
-    
+
+
+
+
 
 })
 
@@ -585,16 +586,16 @@ app.post("/friend_req", authenticateMiddleware, (req, res) => {
 app.post("/accept_req", authenticateMiddleware, (req, res) => {
     con.query(`UPDATE Friends SET status2=1 WHERE user2_id= ${req.session.user_id} AND user1_id=${req.body.input.req_id} AND status1= 1;`, (err, result) => {
         if (err) throw err;
-        else{
-            if(result.changedRows == 1){
+        else {
+            if (result.changedRows == 1) {
                 res.sendStatus(200)
             }
-            else{
+            else {
                 res.sendStatus(205)
             }
-            
+
         }
-            
+
     })
 
 
