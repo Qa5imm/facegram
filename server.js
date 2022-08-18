@@ -11,6 +11,10 @@ const { Socket } = require("socket.io");
 const fileUpload = require("express-fileupload");
 const crypto= require("crypto")
 require("dotenv").config()
+const fs = require('fs');
+const { profile } = require("console");
+
+
 
 
 
@@ -46,15 +50,15 @@ const authenticateMiddleware = (req, res, next) => {
     else res.send("Access Denied")
 }
 
-// const con = mysql.createConnection({
-//     user: "root",
-//     password: "Fatima586*",
-//     host: "localhost",
-//     database: "Students"
-// })
+// // console.log(process.env)
+// const con = mysql.createConnection(process.env.MYSQL_CON)
 
-console.log(process.env)
-const con = mysql.createConnection(process.env.MYSQL_CON)
+const con = mysql.createConnection({
+    user: "root",
+    password: "Fatima586*",
+    host: "localhost",
+    database: "Students"
+})
 
 con.connect((err) => {
     if (err) throw err;
@@ -235,7 +239,6 @@ app.post("/update_info",authenticateMiddleware,(req,res)=>{
                     }
                     
                 }
-
             })
 
         }
@@ -274,6 +277,22 @@ app.post("/about", authenticateMiddleware, (req, res) => {
         })
     }
     else {
+        con.query(`SELECT profile FROM AboutInfo WHERE id=${req.session.user_id}`, (err,resultx)=>{
+            if (err){
+                throw err
+            }
+            const filename= resultx[0]['profile']
+            if (filename!='default.jpg'){
+                const path = `resource/profile_img/${filename}`
+                try {
+                fs.unlinkSync(path)
+                //file removed
+                } catch(err) {
+                console.error(err)
+                }
+            }
+        })
+        
         // nam eof the input is sampleFile
         let id = crypto.randomBytes(20).toString('hex');
         sampleFile = req.files.profile
