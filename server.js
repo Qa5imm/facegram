@@ -51,14 +51,14 @@ const authenticateMiddleware = (req, res, next) => {
 }
 
 // // console.log(process.env)
-// const con = mysql.createConnection(process.env.MYSQL_CON)
+const con = mysql.createConnection(process.env.MYSQL_CON)
 
-const con = mysql.createConnection({
-    user: "root",
-    password: "Fatima586*",
-    host: "localhost",
-    database: "Students"
-})
+// const con = mysql.createConnection({
+//     user: "root",
+//     password: "Fatima586*",
+//     host: "localhost",
+//     database: "Students"
+// })
 
 con.connect((err) => {
     if (err) throw err;
