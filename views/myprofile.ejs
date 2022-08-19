@@ -1,184 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport"content="width=device-width, initial-scale=1.0"/>
-    <title><%= u_name%>'s Profile</title>
-    <link rel="stylesheet" href="/css/myprofile.css">
-    <link rel="stylesheet" href="/css/tailwind.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect"href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet"/>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"
-        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/8e0785f7b4.js" crossorigin="anonymous"></script>
-    <link rel="shortcut icon"   href="/man.png" type="image/png" sizes="50x50">
-  </head>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= u_name%>'s Profile
+  </title>
+  <link rel="stylesheet" href="/css/myprofile.css">
+  <link rel="stylesheet" href="/css/tailwind.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet" />
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/8e0785f7b4.js" crossorigin="anonymous"></script>
+  <link rel="shortcut icon" href="/man.png" type="image/png" sizes="50x50">
+</head>
 
 
 
-  <style>
-    .dropdown{
-      background-color: #14110d;
-      color: #fafdf3;
-      right: 0;
-      margin-right: 1%;
-      margin-top: 1%;
-      border-style: solid; 
-      border-radius: 8%;
-    }
-    .notify_item{
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      padding-right:  4px;
-      font-size: 12px;
-      border: 1px solid white;
-    }
-    .notify_item:last-child{
-      margin-bottom: 0;
+<style>
+  .dropdown {
+    background-color: #14110d;
+    color: #fafdf3;
+    right: 0;
+    margin-right: 1%;
+    margin-top: 1%;
+    border-style: solid;
+    border-radius: 8%;
+  }
 
-    }
-    .picture{
-      border-radius: 5%;
-      font-size: small;
-    }
-    .info{
-      margin: auto;
-      text-align: center;
-      padding: 0 4px;
-      overflow-wrap: break-word;
-    
-    }
-    .dropdown_container{
-		position: relative;
+  .notify_item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 4px;
+    font-size: 12px;
+    border: 1px solid white;
+  }
 
-    }
-    
-	  #options_dropdown{
-      right: 0;
-      background-color: #333;
-      position: absolute;
-      padding: 10px 10px;
-      border-radius: 5%;
-      color:white;
-    }
-    #icon{
-      background-color: white;
-      padding: 9px 11px;
-      color: black;
-      border-radius: 5%;
-      font-size: large;
-    }
-    
-    
-  </style>
+  .notify_item:last-child {
+    margin-bottom: 0;
 
-  <body class="h-100v bg-fb-back">
+  }
 
-    <p class="hidden" id="myid"> <%= my_id %> </p>
-    <p class="hidden" id="userid"> <%= user_id %> </p>
+  .picture {
+    border-radius: 5%;
+    font-size: small;
+  }
 
-    <nav id="navbar-section">
-      <h1 id="page-title" class="text-4xl">Profile</h1>
-      <ul id="nav-links">
+  .info {
+    margin: auto;
+    text-align: center;
+    padding: 0 4px;
+    overflow-wrap: break-word;
 
-        <li class="navbar-buttons link" >
-          <a class="hyperlinks-navbar" href="/edit"><button style="white-space: nowrap;">Edit Profile</button></a>
-        </li>
+  }
 
-        <li class="navbar-buttons link" >
-          <a class="hyperlinks-navbar" href="/info"><button style="white-space: nowrap;"  >Edit Info</button></a>
-        </li>
+  .dropdown_container {
+    position: relative;
 
-        <li class="navbar-buttons link" >
-          <a class="hyperlinks-navbar" href="/logout"><button>logout</button></a>
-        </li>
+  }
 
-        <li class="navbar-buttons link_oppose">
+  #options_dropdown {
+    right: 0;
+    background-color: #333;
+    position: absolute;
+    padding: 10px 10px;
+    border-radius: 5%;
+    color: white;
+  }
 
-          <div class="dropdown_container" id="dropdown_container">
+  #icon {
+    background-color: white;
+    padding: 9px 11px;
+    color: black;
+    border-radius: 5%;
+    font-size: large;
+  }
+</style>
 
-              <a id="icon" href="#" onclick="myfucntion()"><i class="fa-solid fa-bars"></i></a>
+<body class="h-100v bg-fb-back">
 
-              <div style="display: none" id="options_dropdown" >
-                  <a class="" href="/edit"><button style="white-space: nowrap;">Edit Profile</button></a>
-                  <a class="" href="/info"><button style="white-space: nowrap;">Edit Info</button></a>
-                  <a class="" href="/logout"><button style="white-space: nowrap;">Logout</button></a>
-              </div>
+  <p class="hidden" id="myid">
+    <%= my_id %>
+  </p>
+  <p class="hidden" id="userid">
+    <%= user_id %>
+  </p>
+
+  <nav id="navbar-section">
+    <div id="page-title">
+      <a href="myfeed" id="home-button"><i class="fa-solid fa-house"></i></a>
+      <h1>Profile</h1>
+    </div>
+    <ul id="nav-links">
+
+      <li class="navbar-buttons link">
+        <a class="hyperlinks-navbar" href="/edit"><button style="white-space: nowrap;">Edit Profile</button></a>
+      </li>
+
+      <li class="navbar-buttons link">
+        <a class="hyperlinks-navbar" href="/info"><button style="white-space: nowrap;">Edit Info</button></a>
+      </li>
+
+      <li class="navbar-buttons link">
+        <a class="hyperlinks-navbar" href="/logout"><button>logout</button></a>
+      </li>
+
+      <li class="navbar-buttons link_oppose">
+
+        <div class="dropdown_container" id="dropdown_container">
+
+          <a id="icon" href="#" onclick="myfucntion()"><i class="fa-solid fa-bars"></i></a>
+
+          <div style="display: none" id="options_dropdown">
+            <a class="" href="/edit"><button style="white-space: nowrap;">Edit Profile</button></a>
+            <a class="" href="/info"><button style="white-space: nowrap;">Edit Info</button></a>
+            <a class="" href="/logout"><button style="white-space: nowrap;">Logout</button></a>
           </div>
-        </li>
-        
-        <li class="navbar-buttons" id="bell_button" style="display: none;"> 
-          <a class="hyperlinks-navbar" id="dropdown">
-            <button id="bell-button" style="background-color: #fafdf3;cursor: pointer; padding: 8px 10px">
-            <i class="fa-solid fa-bell" id="bell" style="background-color: #fafdf3; position:relative ; font-size: 20px;">
-                <i class="fa-solid fa-circle" id="notification" style="display:none; position: absolute; color: red; font-size: 7px; left:0; top:0"></i>
+        </div>
+      </li>
+
+      <li class="navbar-buttons" id="bell_button" style="display: none;">
+        <a class="hyperlinks-navbar" id="dropdown">
+          <button id="bell-button" style="background-color: #fafdf3;cursor: pointer; padding: 8px 10px">
+            <i class="fa-solid fa-bell" id="bell"
+              style="background-color: #fafdf3; position:relative ; font-size: 20px;">
+              <i class="fa-solid fa-circle" id="notification"
+                style="display:none; position: absolute; color: red; font-size: 7px; left:0; top:0"></i>
             </i>
-            </button>
-          </a>
-          <div class="dropdown" id="dropdown_content" style="position: absolute; color: black; display: none;">
-            
-           
-          </div>
-        </li>
+          </button>
+        </a>
+        <div class="dropdown" id="dropdown_content" style="position: absolute; color: black; display: none;">
+
+
+        </div>
+      </li>
+
+    </ul>
+  </nav>
+
+  <section class="main-body">
+    <section id="tagline-section">
+      <div id="tagline-section-div1" class="tagline-section-divs">
+        <h1 class="text-4xl font-extrabold">
+          <%= u_name %>
+        </h1>
+        <p>
+          <%- my_info[0]["description"] %>
+        </p>
+        <p class="text-2xl font-bold xs:text-3xl sm:text-4xl    ">About me.</p>
         
-      </ul>
-    </nav>
+        <p class="text-base flex items-baseline gap-x-2 xs:text-lg sm:text-xl "><i class="fa-solid fa-house text-xl"></i><span
+            class="font-extrabold text-gray">Lives in</span>
+          <%- my_info[0]["city"] %>
+        </p>
 
-    <section class="main-body">
-      <section id="tagline-section">
-        <div id="tagline-section-div1" class="tagline-section-divs">
-          <h1 class="text-4xl font-extrabold"><%= u_name %>  </h1>
-          <p>
-            <%- my_info[0]["description"] %>
-          </p>
-          <p class="text-4xl font-bold">About me.</p>
-          <p class="text-xl flex items-baseline gap-x-2"><i class="fa-solid fa-house text-xl"></i><span class="font-extrabold text-gray">Lives in</span> <%- my_info[0]["city"] %></p>
-
-          <p class=" text-xl flex items-baseline gap-x-2  "><i class="fa-solid fa-heart"></i> <span class="font-extrabold text-gray">Relationship Status</span><%- my_info[0]["relationship"] %></p>
-          <p class=" text-xl flex items-baseline gap-x-2  "><i class="fa-solid fa-graduation-cap"></i> <span class="font-extrabold text-gray">Went to</span><%- my_info[0]["highschool"] %></p>
-          <div class="flex gap-x-2 mt-3 sm:mt-0">
-            <a> <button id="freind_request"><%= friend_status %></button></a>
-            <a  href= '/messenger/?id=<%= user_id %>'> <button id="message">Message</button></a> 
-          </div>
-                     
-          
+        <p class=" text-base flex items-baseline gap-x-2 xs:text-lg sm:text-xl "><i class="fa-solid fa-heart"></i> <span
+            class="font-extrabold text-gray">Relationship Status</span>
+          <%- my_info[0]["relationship"] %>
+        </p>
+        <p class=" text-base flex items-baseline gap-x-2 xs:text-lg sm:text-xl   "><i class="fa-solid fa-graduation-cap"></i> <span
+            class="font-extrabold text-gray">Went to</span>
+          <%- my_info[0]["highschool"] %>
+        </p>
+        <div class="flex gap-x-2 mt-3 sm:mt-0">
+          <a> <button id="freind_request">
+              <%= friend_status %>
+            </button></a>
+          <a href='/messenger/?id=<%= user_id %>'> <button id="message">Message</button></a>
         </div>
-        <div id="tagline-section-div2" class="tagline-section-divs">
-          <img src='../profile_img/<%- my_info[0]["profile"] %>' />
-        </div>
-      </section>
 
-      <section id="app" class="w-full"></section>
 
-    </body>
+      </div>
+      <div id="tagline-section-div2" class="tagline-section-divs">
+        <img src='../profile_img/<%- my_info[0]["profile"] %>' />
+      </div>
+    </section>
 
-    <script src="/precompiledjs/myprofile.js"></script>
-    <script>
+    <section id="app" class="w-full"></section>
 
-      let myVar = '<%-JSON.stringify(req_list) %>'
-      let myvar_final= JSON.parse(myVar)
-      console.log(myvar_final)
-      for (let i=0; i < myvar_final.length; i++){
-        const notify_item_el= document.createElement("div")
-        notify_item_el.classList.add("notify_item")
+</body>
 
-        const notify_img_el= document.createElement("div")
+<script src="/precompiledjs/myprofile.js"></script>
+<script>
 
-        notify_img_el.innerHTML=`<img class="picture" src=../profile_img/${myvar_final[i]["profile"]}  style="width: 50px">`
-        const notify_info_el= document.createElement("div")
-        notify_info_el.innerHTML=`<a class="text-center" href=/req_info?id=${myvar_final[i]["user1_id"]} style="color: #fafdf3; overflow-wrap: break-word; "> ${myvar_final[i]["name"] } wants to be friend </a>` 
-        notify_info_el.classList.add("info")
-        notify_item_el.appendChild(notify_img_el)
-        notify_item_el.appendChild(notify_info_el)
+  let myVar = '<%-JSON.stringify(req_list) %>'
+  let myvar_final = JSON.parse(myVar)
+  console.log(myvar_final)
+  for (let i = 0; i < myvar_final.length; i++) {
+    const notify_item_el = document.createElement("div")
+    notify_item_el.classList.add("notify_item")
 
-        dropdown_content_el.appendChild(notify_item_el)
-      }
-    </script>
+    const notify_img_el = document.createElement("div")
 
-  </html>
+    notify_img_el.innerHTML = `<img class="picture" src=../profile_img/${myvar_final[i]["profile"]}  style="width: 50px">`
+    const notify_info_el = document.createElement("div")
+    notify_info_el.innerHTML = `<a class="text-center" href=/req_info?id=${myvar_final[i]["user1_id"]} style="color: #fafdf3; overflow-wrap: break-word; "> ${myvar_final[i]["name"]} wants to be friend </a>`
+    notify_info_el.classList.add("info")
+    notify_item_el.appendChild(notify_img_el)
+    notify_item_el.appendChild(notify_info_el)
+
+    dropdown_content_el.appendChild(notify_item_el)
+  }
+</script>
+
+</html>

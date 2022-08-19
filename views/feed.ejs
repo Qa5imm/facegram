@@ -34,11 +34,14 @@
     }
 
     #page-title {
-        flex-basis: 50%;
+        flex-basis: 60%;
         margin: 0;
         text-align: left;
         font-weight: 700;
         font-size: xx-large;
+        display: flex;
+        align-items: baseline;
+        column-gap: 3rem;
     }
 
     #nav-links {
@@ -60,7 +63,6 @@
         font-size: 16px;
         border-radius: 4px;
     }
-
     .link_oppose {
         display: none;
     }
@@ -81,11 +83,22 @@
         }
 
     }
+    @media screen and (max-width:480px) {
+    #page-title {
+      font-size: x-large;
+      text-align: center;
+    }
+
+  }
 </style>
 
 <body class="h-100v pt-20 bg-fb-back">
     <nav id="navbar-section">
-        <h1 id="page-title">Feed</h1>
+        <div id="page-title">
+            <a href="myfeed" id="home-button"><i class="fa-solid fa-house"></i></a>
+            <h1 >Feed</h1>
+        </div>
+        
         <ul id="nav-links">
             <li class="navbar-buttons link">
                 <a class="hyperlinks-navbar" href="/profile"><button style="white-space: nowrap;">Profile</button></a>

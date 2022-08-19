@@ -21,12 +21,22 @@ body {
     color: #fafdf3;
   }
   
-  #page-title {
+  /* #page-title {
     flex-basis: 50%;
     margin: 0;
     text-align: left;
     font-weight: 700;
-  }
+  } */
+  #page-title {
+    flex-basis: 60%;
+    margin: 0;
+    text-align: left;
+    font-weight: 700;
+    font-size: xx-large;
+    display: flex;
+    align-items: baseline;
+    column-gap: 3rem;
+}
   
   #nav-links {
     flex-basis: 50%;
@@ -375,4 +385,11 @@ body {
     #body-calc-page {
       height: 70vh;
     }
+  }
+  @media screen and (max-width:480px) {
+    #page-title {
+      font-size: x-large;
+      text-align: center;
+    }
+
   }

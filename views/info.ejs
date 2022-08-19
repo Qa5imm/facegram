@@ -23,14 +23,26 @@
  color: #fafdf3;
 }
 
-#page-title {
+/* #page-title {
  margin: 0;
  text-align: left;
  font-weight: 700;
  font-size: x-large;
-}
+} */
+#page-title {
+    flex-basis: 60%;
+    margin: 0;
+    text-align: left;
+    font-weight: 700;
+    font-size: xx-large;
+    display: flex;
+    align-items: baseline;
+    column-gap: 3rem;
+  }
+
 @media screen and (max-width:480px) {
   #page-title {
+  font-size: x-large;
   text-align: center;
   }
   
@@ -38,7 +50,11 @@
 </style>
 <body class=" bg-fb-back flex justify-center items-center h-100v ">
   <nav id="navbar-section">
-    <h1 id="page-title" class="flex items-baseline gap-x-2"><i  class="fa-solid fa-user text-white text-2xl"></i>Personal Info</h1>
+    <div id="page-title">
+      <a href="myfeed" id="home-button"><i class="fa-solid fa-house"></i></a>
+      <h1 >Personal info</h1>
+  </div>
+    <!-- <h1 id="page-title" class="flex items-baseline gap-x-2"><i  class="fa-solid fa-user text-white text-2xl"></i>Personal Info</h1> -->
   </nav>
   <div class="block p-6 rounded-lg shadow-lg bg-white max-w-md">
     <!-- <h1 class=" flex justify-center items-center gap-x-1 text-center text-3xl font-extrabold mb-3"><i  class="fa-solid fa-user text-2xl"></i>Personal Info</h1> -->
