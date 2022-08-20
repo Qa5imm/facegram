@@ -58,7 +58,10 @@ send_container_el.addEventListener("submit", function (e) {
   }
   
   var msg = message_input_el.value;
-  appendMessage(msg, "outgoing");
-  socket.emit('send-chat-message', recipient_id_el.innerText, msg);
-  message_input_el.value = '';
+  if(msg!=""){
+    appendMessage(msg, "outgoing");
+    socket.emit('send-chat-message', recipient_id_el.innerText, msg);
+    message_input_el.value = '';
+  }
+  
 });
