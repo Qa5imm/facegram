@@ -17,6 +17,8 @@ var img_src_el = document.getElementById("img_src");
 var src = img_src_el.src;
 var final_src = src.replace("http://localhost:3000", "..");
 
+socket.emit('new-user', my_id_el.innerText);
+
 function appendMessage(msg, direction) {
   var chat_el = document.createElement('div');
   var details_el = document.createElement('div');
@@ -39,13 +41,16 @@ function appendMessage(msg, direction) {
   details_el.append(p_el);
   chat_el.append(details_el);
   message_container_el.appendChild(chat_el);
+  if (message_container_el.lastElementChild){
+    message_container_el.lastElementChild.scrollIntoView(true);
+}
 }
 
-socket.emit('new-user', my_id_el.innerText);
 socket.on('recieve-msg', function (msg, id) {
   console.log(msg);
   appendMessage(msg, "incoming");
 });
+
 send_container_el.addEventListener("submit", function (e) {
   e.preventDefault();
   if (message_container_el.lastElementChild){

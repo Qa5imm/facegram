@@ -78,8 +78,7 @@ io.on('connection', (socket) => {
     })
     socket.on("send-chat-message", (friend_id, msg) => {
         const key = Object.keys(users).find(key => users[key] === socket.id);
-
-
+        if(key){
         con.query('INSERT INTO Messages (sender_id, recipient_id, message) VALUES (?,?,?)', [key, friend_id, msg], (err, result) => {
             if (err) throw err;
             else {
@@ -89,6 +88,9 @@ io.on('connection', (socket) => {
 
             }
         })
+            
+        }
+
 
     })
 
