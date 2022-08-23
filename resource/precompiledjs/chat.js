@@ -46,6 +46,7 @@ socket.on('recieve-msg', function (msg, id) {
   console.log(msg);
   appendMessage(msg, "incoming");
 });
+
 send_container_el.addEventListener("submit", function (e) {
   e.preventDefault();
   if (message_container_el.lastElementChild){
