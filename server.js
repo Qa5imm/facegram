@@ -126,8 +126,8 @@ app.get("/messenger", (req, res) => {
 
         }
 
-        con.query(`SELECT * FROM Messages WHERE (sender_id=${req.session.user_id} AND recipient_id=${chater_id}) OR (sender_id=${chater_id} AND recipient_id=${req.session.user_id})`, (err, result2) => {
-            if (err) throw err
+        con.query(`SELECT * FROM Messages WHERE (sender_id=${req.session.user_id} AND recipient_id=${chater_id}) OR (sender_id=${chater_id} AND recipient_id=${req.session.user_id})`, (err2, result2) => {
+            if (err2) throw err2
             res.render("chat.ejs",
                 {
                     recipient_id: chater_id,
