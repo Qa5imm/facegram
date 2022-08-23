@@ -12,10 +12,41 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-
+// $(document).ready(()=>{
+//     $("#postform").submit((e)=>
+//     {
+//         e.preventDefault()
+//         const mycontent= $("#post-content").val()
+//         console.log("here")
+//         $.post("/postnew",{content: mycontent} ,function(err, result){
+//             if (err){
+//                 console.log(err)
+//                 alert("couldn't post")
+//             }})
+//     })
+// })
+// const socket = io();
+// const id_el = document.getElementById("id")
+// socket.emit("user_info", id_el.innerText)
+// $(document).click(function (e) {
+//     e.stopPropagation();
+//     var container = $("#dropdown");
+//     //check if the clicked area is dropDown or not
+//     if (container.has(e.target).length === 0) {
+//         $('#dropdown').hide();
+//     }
+// })
+// $(document).ready(function(){
+//     // Show hide popover
+//     $("#dropdown").click(function(){
+//         $(this).find(".dropdown-menu").slideToggle("fast");
+//     });
+// });
 var acc_id_el = document.getElementById("acc_id").innerText;
 var dropdown_el = document.getElementById("dropdown");
-var search_bar_el = document.getElementById("search_bar"); 
+var search_bar_el = document.getElementById("search_bar"); // ('body').click(function(event){
+//     $dropdowns.not($dropdowns.has(event.target)).hide();
+//  });
 
 document.onclick = function (e) {
   console.log(e.target.id);
@@ -138,7 +169,22 @@ var Post = function Post() {
   var myRef = React.useRef([]);
   myRef.current = posts.map(function (_, i) {
     return myRef.current[i] || React.createRef();
-  }); 
+  }); // const handleUpdate = (event, param,id) => {
+  //     console.log("hwrw")
+  //     event.preventDefault()
+  //     param.current.setAttribute("disabled",""); 
+  //     // updated_msg=event.target.children[0].value
+  //     const updated_msg=event.target.children[0].value
+  //     console.log(event.target.children[0].value)
+  //     console.log(id)
+  //     $.post('/update', { post_id: id , msg:updated_msg }, function (err, result) {
+  //         if (err) {
+  //             alert("couldn't post")
+  //         }
+  //     })
+  //     console.log("htete")
+  //     setReload(cur_val => !cur_val)
+  //     };
 
   function handelClick(e) {
     if (e.target.parentElement.children[1].style.display === 'none') {

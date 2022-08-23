@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/tailwind.css">
     <script src="https://kit.fontawesome.com/2723f43300.js" crossorigin="anonymous"></script>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="/man.png" type="image/png" sizes="50x50">
@@ -19,7 +19,6 @@
     p {
         font-weight: 500;
     }
-
     #navbar-section {
         z-index: 2;
         position: fixed;
@@ -32,7 +31,6 @@
         align-items: center;
         color: #fafdf3;
     }
-
     #page-title {
         flex-basis: 60%;
         margin: 0;
@@ -43,7 +41,6 @@
         align-items: baseline;
         column-gap: 3rem;
     }
-
     #nav-links {
         flex-basis: 50%;
         list-style: none;
@@ -54,7 +51,6 @@
         align-items: center;
         column-gap: 10px;
     }
-
     #nav-links>li>a>button {
         background-color: #fafdf3;
         font-weight: 700;
@@ -66,29 +62,22 @@
     .link_oppose {
         display: none;
     }
-
     .hyperlinks-navbar {
         color: #14110d;
         text-decoration: none;
     }
-
     @media screen and (max-width:380px) {
-
-
         #nav-links>li>a>button {
-
             padding: 8px 10px;
             border: 0;
             font-size: 10px;
         }
-
     }
     @media screen and (max-width:480px) {
     #page-title {
       font-size: x-large;
       text-align: center;
     }
-
   }
 </style>
 

@@ -170,7 +170,7 @@ var Post = function Post() {
   var myRef = React.useRef([]);
   myRef.current = posts.map(function (_, i) {
     return myRef.current[i] || React.createRef();
-  }); 
+  });
 
   function handelClick(e) {
     if (e.target.parentElement.children[1].style.display === 'none') {
@@ -229,7 +229,7 @@ var Post = function Post() {
       className: "text-xl bold"
     }, elem.name), /*#__PURE__*/React.createElement("span", {
       className: "text-gray-400 text-xs"
-    }, " ", elem.date_posted))), /*#__PURE__*/React.createElement("div", {
+    }, " ", elem.date_posted))), parseInt(profiles_id.innerText) === parseInt(myid_el.innerText) && /*#__PURE__*/React.createElement("div", {
       className: "relative"
     }, /*#__PURE__*/React.createElement("i", {
       onClick: handelClick,
